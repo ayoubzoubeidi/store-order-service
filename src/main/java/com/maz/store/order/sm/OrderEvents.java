@@ -1,4 +1,4 @@
-package com.maz.order.sm;
+package com.maz.store.order.sm;
 
 public enum OrderEvents {
     VALIDATE, PASS_VALIDATION, FAIL_VALIDATION,

@@ -1,4 +1,4 @@
-package com.maz.order.domain;
+package com.maz.store.order.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

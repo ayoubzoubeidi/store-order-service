@@ -1,6 +1,6 @@
-package com.maz.order.sm;
+package com.maz.store.order.sm;
 
-import com.maz.order.domain.OrderStatus;
+import com.maz.store.order.domain.OrderStatus;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
