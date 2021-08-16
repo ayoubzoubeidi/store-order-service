@@ -25,4 +25,6 @@ public class Order extends BaseEntity {
     private UUID customerId;
 
     //state machine's state
+    private OrderStatus status;
+
 }

@@ -1,0 +1,8 @@
+package com.maz.order.sm;
+
+public enum OrderEvents {
+    VALIDATE, PASS_VALIDATION, FAIL_VALIDATION,
+    ALLOCATE, PASS_ALLOCATION, FAIL_ALLOCATION,
+    DELIVER, PICKED_UP, DELIVERED
+
+}
