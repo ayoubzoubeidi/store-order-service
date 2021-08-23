@@ -29,13 +29,10 @@ public class PreStateChangeInterceptor extends StateMachineInterceptorAdapter<Or
     @Override
     @Transactional
     public void preStateChange(State<OrderStatus, OrderEvent> state, Message<OrderEvent> message, Transition<OrderStatus, OrderEvent> transition, StateMachine<OrderStatus, OrderEvent> stateMachine, StateMachine<OrderStatus, OrderEvent> rootStateMachine) {
-
         Optional.ofNullable(message)
                 .flatMap(msg -> Optional.ofNullable((String) msg.getHeaders().getOrDefault(ORDER_ID_HEADER, "")))
                 .ifPresent(orderId -> {
-
                     log.debug("Saving state for order id: " + orderId + " status: " + state.getId());
-
                     BaseOrder baseOrder = orderRepository.getById(UUID.fromString(orderId));
                     baseOrder.setStatus(state.getId());
                     orderRepository.saveAndFlush(baseOrder);

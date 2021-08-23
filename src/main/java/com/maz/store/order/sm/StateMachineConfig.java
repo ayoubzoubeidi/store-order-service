@@ -1,7 +1,9 @@
 package com.maz.store.order.sm;
 
 import com.maz.store.order.domain.OrderStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
@@ -11,7 +13,11 @@ import java.util.EnumSet;
 
 @Configuration
 @EnableStateMachineFactory
+@RequiredArgsConstructor
 public class StateMachineConfig extends StateMachineConfigurerAdapter<OrderStatus, OrderEvent> {
+
+    private final Action<OrderStatus, OrderEvent> validateOrderAction;
+
 
     @Override
     public void configure(StateMachineStateConfigurer<OrderStatus, OrderEvent> states) throws Exception {
@@ -29,7 +35,7 @@ public class StateMachineConfig extends StateMachineConfigurerAdapter<OrderStatu
     public void configure(StateMachineTransitionConfigurer<OrderStatus, OrderEvent> transitions) throws Exception {
         transitions
                 .withExternal()
-                .source(OrderStatus.NEW).target(OrderStatus.VALIDATION_PENDING).event(OrderEvent.VALIDATE)
+                .source(OrderStatus.NEW).target(OrderStatus.VALIDATION_PENDING).event(OrderEvent.VALIDATE).action(validateOrderAction)
                 .and()
                 .withExternal()
                 .source(OrderStatus.VALIDATION_PENDING).target(OrderStatus.VALIDATED).event(OrderEvent.PASS_VALIDATION)

@@ -13,6 +13,7 @@ import org.springframework.statemachine.support.DefaultStateMachineContext;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -38,7 +39,10 @@ public class StateMachineManagerImpl implements StateMachineManager {
     }
 
     @Override
-    public void validateOrder() {
+    public void validateOrder(UUID orderId) {
+
+
+
     }
 
     @Override
@@ -63,7 +67,7 @@ public class StateMachineManagerImpl implements StateMachineManager {
 
         stateMachine.getStateMachineAccessor().doWithAllRegions(
                 sma -> {
-                    sma.resetStateMachine(new DefaultStateMachineContext<OrderStatus, OrderEvent>(baseOrder.getStatus(), null, null, null));
+                    sma.resetStateMachine(new DefaultStateMachineContext<>(baseOrder.getStatus(), null, null, null));
                     sma.addStateMachineInterceptor(preStateChangeInterceptor);
                 }
         );
