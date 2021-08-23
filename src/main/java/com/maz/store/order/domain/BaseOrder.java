@@ -9,6 +9,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -17,12 +18,12 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Order extends BaseEntity {
+public class BaseOrder extends BaseEntity {
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "baseOrder", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     private Set<OrderLine> orderLines = new HashSet<>();
-    private UUID customerId;
+    private UUID customerId ;
 
     //state machine's state
     private OrderStatus status;

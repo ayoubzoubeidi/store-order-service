@@ -5,8 +5,8 @@
 * ### store-product-service [GitHub](https://github.com/ayoubzoubeidi/store-product-service) :
     * Registering products, getting information about products.
 * ### store-inventory-service [GitHub](https://github.com/ayoubzoubeidi/store-inventory-service) :
-    * Managing the inventory, order allocation and de-allocation.
-* ### store-order-service [GitHub](https://github.com/ayoubzoubeidi/store-order-service) :
+    * Managing the inventory, baseOrder allocation and de-allocation.
+* ### store-baseOrder-service [GitHub](https://github.com/ayoubzoubeidi/store-baseOrder-service) :
     * Managing [Orchestration-based saga](https://microservices.io/patterns/data/saga.html).
 * ### store-shipping-service [GitHub](https://github.com/ayoubzoubeidi/store-shipping-service) :
     * Mock shipping process.

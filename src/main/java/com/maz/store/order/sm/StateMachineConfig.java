@@ -2,58 +2,58 @@ package com.maz.store.order.sm;
 
 import com.maz.store.order.domain.OrderStatus;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.statemachine.config.EnableStateMachine;
-import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
+import org.springframework.statemachine.config.EnableStateMachineFactory;
+import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
 
 import java.util.EnumSet;
 
 @Configuration
-@EnableStateMachine
-public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<OrderStatus, OrderEvents> {
+@EnableStateMachineFactory
+public class StateMachineConfig extends StateMachineConfigurerAdapter<OrderStatus, OrderEvent> {
 
     @Override
-    public void configure(StateMachineStateConfigurer<OrderStatus, OrderEvents> states) throws Exception {
+    public void configure(StateMachineStateConfigurer<OrderStatus, OrderEvent> states) throws Exception {
         states
                 .withStates()
                 .initial(OrderStatus.NEW)
+                .states(EnumSet.allOf(OrderStatus.class))
                 .end(OrderStatus.ALLOCATION_FAILED)
                 .end(OrderStatus.VALIDATION_FAILED)
                 .end(OrderStatus.CANCELLED)
-                .end(OrderStatus.PICKED_UP)
-                .states(EnumSet.allOf(OrderStatus.class));
+                .end(OrderStatus.PICKED_UP);
     }
 
     @Override
-    public void configure(StateMachineTransitionConfigurer<OrderStatus, OrderEvents> transitions) throws Exception {
+    public void configure(StateMachineTransitionConfigurer<OrderStatus, OrderEvent> transitions) throws Exception {
         transitions
                 .withExternal()
-                .source(OrderStatus.NEW).target(OrderStatus.VALIDATION_PENDING).event(OrderEvents.VALIDATE)
+                .source(OrderStatus.NEW).target(OrderStatus.VALIDATION_PENDING).event(OrderEvent.VALIDATE)
                 .and()
                 .withExternal()
-                .source(OrderStatus.VALIDATION_PENDING).target(OrderStatus.VALIDATED).event(OrderEvents.PASS_VALIDATION)
+                .source(OrderStatus.VALIDATION_PENDING).target(OrderStatus.VALIDATED).event(OrderEvent.PASS_VALIDATION)
                 .and()
                 .withExternal()
-                .source(OrderStatus.VALIDATION_PENDING).target(OrderStatus.VALIDATION_FAILED).event(OrderEvents.FAIL_VALIDATION)
+                .source(OrderStatus.VALIDATION_PENDING).target(OrderStatus.VALIDATION_FAILED).event(OrderEvent.FAIL_VALIDATION)
                 .and()
                 .withExternal()
-                .source(OrderStatus.VALIDATED).target(OrderStatus.ALLOCATION_PENDING).event(OrderEvents.ALLOCATE)
+                .source(OrderStatus.VALIDATED).target(OrderStatus.ALLOCATION_PENDING).event(OrderEvent.ALLOCATE)
                 .and()
                 .withExternal()
-                .source(OrderStatus.ALLOCATION_PENDING).target(OrderStatus.ALLOCATED).event(OrderEvents.PASS_ALLOCATION)
+                .source(OrderStatus.ALLOCATION_PENDING).target(OrderStatus.ALLOCATED).event(OrderEvent.PASS_ALLOCATION)
                 .and()
                 .withExternal()
-                .source(OrderStatus.ALLOCATION_PENDING).target(OrderStatus.ALLOCATION_FAILED).event(OrderEvents.FAIL_ALLOCATION)
+                .source(OrderStatus.ALLOCATION_PENDING).target(OrderStatus.ALLOCATION_FAILED).event(OrderEvent.FAIL_ALLOCATION)
                 .and()
                 .withExternal()
-                .source(OrderStatus.ALLOCATED).target(OrderStatus.DELIVERY_PENDING).event(OrderEvents.DELIVER)
+                .source(OrderStatus.ALLOCATED).target(OrderStatus.DELIVERY_PENDING).event(OrderEvent.DELIVER)
                 .and()
                 .withExternal()
-                .source(OrderStatus.DELIVERY_PENDING).target(OrderStatus.PICKED_UP).event(OrderEvents.PICKED_UP)
+                .source(OrderStatus.DELIVERY_PENDING).target(OrderStatus.PICKED_UP).event(OrderEvent.PICKED_UP)
                 .and()
                 .withExternal()
-                .source(OrderStatus.PICKED_UP).target(OrderStatus.DELIVERED).event(OrderEvents.DELIVERED);
+                .source(OrderStatus.PICKED_UP).target(OrderStatus.DELIVERED).event(OrderEvent.DELIVERED);
 
     }
 

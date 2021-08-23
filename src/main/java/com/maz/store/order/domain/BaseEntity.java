@@ -1,5 +1,6 @@
 package com.maz.store.order.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,15 +16,10 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
 public class BaseEntity {
 
-    public BaseEntity(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate) {
-        this.id = id;
-        this.version = version;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-    }
 
     @Id
     @GeneratedValue(generator = "UUID")
