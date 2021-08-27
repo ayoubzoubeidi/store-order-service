@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.maz</groupId>
-    <artifactId>order</artifactId>
+    <artifactId>store-order-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>store-order-service</name>
-    <description>store-baseOrder-service</description>
+    <description>store-order-service</description>
     <properties>
         <java.version>11</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
@@ -99,6 +99,10 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
         </dependency>
     </dependencies>
 
