@@ -1,4 +1,4 @@
-package com.maz.store.order.services.validation;
+package com.maz.store.order.services.listeners;
 
 import com.maz.store.model.product.ValidationResponse;
 import com.maz.store.order.config.JmsConfig;

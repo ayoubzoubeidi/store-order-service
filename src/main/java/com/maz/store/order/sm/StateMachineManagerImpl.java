@@ -41,12 +41,14 @@ public class StateMachineManagerImpl implements StateMachineManager {
     @Override
     public void validateOrder(UUID orderId) {
 
+        BaseOrder order = orderRepository.getById(orderId);
 
+        sendEvent(order, OrderEvent.PASS_VALIDATION);
 
     }
 
     @Override
-    public void allocateOrder() {
+    public void allocateOrder(UUID orderId) {
 
     }
 

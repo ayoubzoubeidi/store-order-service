@@ -10,6 +10,6 @@ public interface StateMachineManager {
 
     void validateOrder(UUID orderId);
 
-    void allocateOrder();
+    void allocateOrder(UUID orderId);
 
 }

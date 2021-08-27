@@ -17,6 +17,7 @@ import java.util.EnumSet;
 public class StateMachineConfig extends StateMachineConfigurerAdapter<OrderStatus, OrderEvent> {
 
     private final Action<OrderStatus, OrderEvent> validateOrderAction;
+    private final Action<OrderStatus, OrderEvent> allocationAction;
 
 
     @Override
@@ -44,7 +45,7 @@ public class StateMachineConfig extends StateMachineConfigurerAdapter<OrderStatu
                 .source(OrderStatus.VALIDATION_PENDING).target(OrderStatus.VALIDATION_FAILED).event(OrderEvent.FAIL_VALIDATION)
                 .and()
                 .withExternal()
-                .source(OrderStatus.VALIDATED).target(OrderStatus.ALLOCATION_PENDING).event(OrderEvent.ALLOCATE)
+                .source(OrderStatus.VALIDATED).target(OrderStatus.ALLOCATION_PENDING).event(OrderEvent.ALLOCATE).action(allocationAction)
                 .and()
                 .withExternal()
                 .source(OrderStatus.ALLOCATION_PENDING).target(OrderStatus.ALLOCATED).event(OrderEvent.PASS_ALLOCATION)
