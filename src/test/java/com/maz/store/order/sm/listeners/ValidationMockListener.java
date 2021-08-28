@@ -10,10 +10,11 @@ import org.springframework.stereotype.Component;
 import static com.maz.store.order.config.JmsConfig.VALIDATE_ORDER_QUEUE;
 import static com.maz.store.order.config.JmsConfig.VALIDATION_RESPONSE_QUEUE;
 import static com.maz.store.order.sm.StateMachineManagerTest.FAILED_VALIDATION_ID;
+import static com.maz.store.order.sm.StateMachineManagerTest.STOP_AT_VALIDATION;
 
 @Component
 @RequiredArgsConstructor
-public class ValidationL {
+public class ValidationMockListener {
 
     private final JmsTemplate jmsTemplate;
 
@@ -22,6 +23,7 @@ public class ValidationL {
 
         Boolean isValid = !request.getOrder().getCustomerId().equals(FAILED_VALIDATION_ID);
 
+        if (!request.getOrder().getOrderLines().get(0).getUpc().equals(STOP_AT_VALIDATION))
         jmsTemplate.convertAndSend(VALIDATION_RESPONSE_QUEUE, ValidationResponse.builder().orderId(request.getOrder().getId()).isValid(isValid).build());
 
     }

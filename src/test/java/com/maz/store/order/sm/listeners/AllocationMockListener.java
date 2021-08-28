@@ -3,18 +3,18 @@ package com.maz.store.order.sm.listeners;
 
 import com.maz.store.model.inventory.AllocationRequest;
 import com.maz.store.model.inventory.AllocationResponse;
+import com.maz.store.model.inventory.DeAllocationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
-import static com.maz.store.order.config.JmsConfig.ALLOCATE_ORDER_QUEUE;
-import static com.maz.store.order.config.JmsConfig.ALLOCATION_RESPONSE_QUEUE;
+import static com.maz.store.order.config.JmsConfig.*;
 import static com.maz.store.order.sm.StateMachineManagerTest.FAILED_ALLOCATION_ID;
 
 @Component
 @RequiredArgsConstructor
-public class AllocationL {
+public class AllocationMockListener {
 
     private final JmsTemplate jmsTemplate;
 
@@ -37,4 +37,7 @@ public class AllocationL {
 
     }
 
+    @JmsListener(destination = DE_ALLOCATION_QUEUE)
+    public void listenDeAllocation(DeAllocationRequest request) {
+    }
 }
