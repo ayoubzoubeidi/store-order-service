@@ -7,6 +7,7 @@ import com.maz.store.order.repositories.OrderRepository;
 import com.maz.store.order.sm.interceptors.PreStateChangeInterceptor;
 import com.maz.store.order.web.mappers.OrderMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
@@ -45,10 +46,13 @@ public class StateMachineManagerImpl implements StateMachineManager {
 
     @Override
     public void validateOrder(UUID orderId) {
-
         BaseOrder order = orderRepository.getById(orderId);
 
         sendEvent(order, OrderEvent.PASS_VALIDATION);
+
+        BaseOrder order1 = orderRepository.getById(orderId);
+
+        sendEvent(order1, OrderEvent.ALLOCATE);
 
     }
 
@@ -65,8 +69,14 @@ public class StateMachineManagerImpl implements StateMachineManager {
         );
 
         if (managedOrder.getStatus() == DE_ALLOCATION_PENDING) {
+
+            sendEvent(managedOrder, OrderEvent.FAIL_ALLOCATION);
             sendEvent(managedOrder, OrderEvent.DE_ALLOCATED);
+
         } else {
+
+            sendEvent(managedOrder, OrderEvent.PASS_ALLOCATION);
+
             sendEvent(managedOrder, OrderEvent.DELIVER);
         }
 

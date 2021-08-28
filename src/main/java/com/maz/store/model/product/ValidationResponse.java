@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ValidationResponse implements Serializable {
     static final long serialVersionUID = -4612085944470168822L;

@@ -30,6 +30,7 @@ public class AllocationAction implements Action<OrderStatus, OrderEvent> {
     @Override
     public void execute(StateContext<OrderStatus, OrderEvent> stateContext) {
 
+
         UUID orderId = UUID.fromString(
                 (String) Objects.requireNonNull(stateContext.getMessage().getHeaders().get(ORDER_ID_HEADER))
         );

@@ -6,6 +6,8 @@ import lombok.*;
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ValidationRequest implements Serializable {
 
