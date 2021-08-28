@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
+import static com.maz.store.order.domain.OrderStatus.DE_ALLOCATION_PENDING;
+
 @Component
 @RequiredArgsConstructor
 @Transactional
@@ -53,10 +55,20 @@ public class StateMachineManagerImpl implements StateMachineManager {
     @Override
     public void allocateOrder(OrderDto order) {
 
-        // Persist order's quantity allocated.
-        BaseOrder savedOrder = orderRepository.saveAndFlush(orderMapper.orderDtoToOrder(order));
+        BaseOrder managedOrder = orderRepository.findById(order.getId()).get();
 
-        sendEvent(savedOrder, OrderEvent.DELIVER);
+        // Persist order's quantity allocated.
+        order.getOrderLines().forEach(
+                (orderLineDto -> {
+                    orderRepository.updateOrderLine(orderLineDto.getId(), orderLineDto.getQuantityAllocated());
+                })
+        );
+
+        if (managedOrder.getStatus() == DE_ALLOCATION_PENDING) {
+            sendEvent(managedOrder, OrderEvent.DE_ALLOCATED);
+        } else {
+            sendEvent(managedOrder, OrderEvent.DELIVER);
+        }
 
     }
 
@@ -80,6 +92,10 @@ public class StateMachineManagerImpl implements StateMachineManager {
 
     @Override
     public void cancelOrder(UUID orderId) {
+
+        BaseOrder order = orderRepository.getById(orderId);
+
+        sendEvent(order, OrderEvent.CANCEL);
 
     }
 

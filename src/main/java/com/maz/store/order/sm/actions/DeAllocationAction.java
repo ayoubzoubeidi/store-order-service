@@ -20,7 +20,7 @@ import static com.maz.store.order.sm.StateMachineManagerImpl.ORDER_ID_HEADER;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class FailedAllocationAction implements Action<OrderStatus, OrderEvent> {
+public class DeAllocationAction implements Action<OrderStatus, OrderEvent> {
 
     private final JmsTemplate jmsTemplate;
     private final OrderMapper orderMapper;
