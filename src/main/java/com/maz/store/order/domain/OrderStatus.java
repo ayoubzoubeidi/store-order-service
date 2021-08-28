@@ -1,6 +1,7 @@
 package com.maz.store.order.domain;
 
 public enum OrderStatus {
+
     NEW, CANCELLED,
     VALIDATED, VALIDATION_PENDING, VALIDATION_FAILED,
     ALLOCATED, ALLOCATION_PENDING, ALLOCATION_FAILED,

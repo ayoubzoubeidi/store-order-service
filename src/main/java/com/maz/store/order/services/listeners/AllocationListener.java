@@ -18,7 +18,9 @@ public class AllocationListener {
     public void listen(AllocationResponse response) {
 
         if (!response.getAllocationError()) {
-            stateMachineManager.allocateOrder(response.getOrder().getId());
+            stateMachineManager.allocateOrder(response.getOrder());
+        } else {
+            stateMachineManager.failedAllocation(response.getOrder().getId());
         }
 
     }

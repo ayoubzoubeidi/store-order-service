@@ -15,8 +15,11 @@ public class ValidationListener {
 
     @JmsListener(destination = JmsConfig.VALIDATION_RESPONSE_QUEUE)
     public void validationResponseListener(ValidationResponse validationResponse) {
-        if(validationResponse.isValid())
+        if (validationResponse.isValid()) {
             stateMachineManager.validateOrder(validationResponse.getOrderId());
+        } else {
+            stateMachineManager.failedValidation(validationResponse.getOrderId());
+        }
     }
 
 }

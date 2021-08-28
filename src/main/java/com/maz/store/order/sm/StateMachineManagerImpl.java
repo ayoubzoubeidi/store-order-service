@@ -1,9 +1,11 @@
 package com.maz.store.order.sm;
 
+import com.maz.store.model.order.OrderDto;
 import com.maz.store.order.domain.BaseOrder;
 import com.maz.store.order.domain.OrderStatus;
 import com.maz.store.order.repositories.OrderRepository;
 import com.maz.store.order.sm.interceptors.PreStateChangeInterceptor;
+import com.maz.store.order.web.mappers.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -23,6 +25,7 @@ public class StateMachineManagerImpl implements StateMachineManager {
     public static String ORDER_ID_HEADER = "order-id";
     private final StateMachineFactory<OrderStatus, OrderEvent> stateMachineFactory;
     private final OrderRepository orderRepository;
+    private final OrderMapper orderMapper;
     private final PreStateChangeInterceptor preStateChangeInterceptor;
 
 
@@ -48,7 +51,35 @@ public class StateMachineManagerImpl implements StateMachineManager {
     }
 
     @Override
-    public void allocateOrder(UUID orderId) {
+    public void allocateOrder(OrderDto order) {
+
+        // Persist order's quantity allocated.
+        BaseOrder savedOrder = orderRepository.saveAndFlush(orderMapper.orderDtoToOrder(order));
+
+        sendEvent(savedOrder, OrderEvent.DELIVER);
+
+    }
+
+    @Override
+    public void failedValidation(UUID orderId) {
+
+        BaseOrder order = orderRepository.getById(orderId);
+
+        sendEvent(order, OrderEvent.FAIL_VALIDATION);
+
+    }
+
+    @Override
+    public void failedAllocation(UUID orderId) {
+
+        BaseOrder order = orderRepository.getById(orderId);
+
+        sendEvent(order, OrderEvent.FAIL_ALLOCATION);
+
+    }
+
+    @Override
+    public void cancelOrder(UUID orderId) {
 
     }
 
