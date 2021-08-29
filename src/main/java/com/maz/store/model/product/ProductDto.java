@@ -5,10 +5,9 @@ import lombok.*;
 import java.util.Date;
 import java.util.UUID;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder
 public class ProductDto {
 
