@@ -5,6 +5,7 @@ import com.maz.store.model.inventory.AllocationRequest;
 import com.maz.store.model.inventory.AllocationResponse;
 import com.maz.store.model.inventory.DeAllocationRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,10 @@ public class AllocationMockListener {
     private final JmsTemplate jmsTemplate;
 
     @JmsListener(destination = ALLOCATE_ORDER_QUEUE)
+    @SneakyThrows
     public void listen(AllocationRequest request) {
+
+        Thread.sleep(1000);
 
         Boolean allocationError = request.getOrderDto().getCustomerId().equals(FAILED_ALLOCATION_ID);
 

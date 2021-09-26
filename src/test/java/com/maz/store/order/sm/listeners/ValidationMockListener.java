@@ -3,6 +3,7 @@ package com.maz.store.order.sm.listeners;
 import com.maz.store.model.product.ValidationRequest;
 import com.maz.store.model.product.ValidationResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,11 @@ public class ValidationMockListener {
     private final JmsTemplate jmsTemplate;
 
     @JmsListener(destination = VALIDATE_ORDER_QUEUE)
+    @SneakyThrows
     public void listen(ValidationRequest request) {
+
+        Thread.sleep(1000);
+
 
         Boolean isValid = !request.getOrder().getCustomerId().equals(FAILED_VALIDATION_ID);
 

@@ -64,6 +64,11 @@ public class StateMachineManagerTest {
 
         await().untilAsserted(() -> {
             BaseOrder baseOrder = orderRepository.findById(managedOrder.getId()).get();
+            assertEquals(VALIDATION_PENDING, baseOrder.getStatus());
+    });
+
+        await().untilAsserted(() -> {
+            BaseOrder baseOrder = orderRepository.findById(managedOrder.getId()).get();
             assertEquals(ALLOCATION_PENDING, baseOrder.getStatus());
         });
 
@@ -72,7 +77,6 @@ public class StateMachineManagerTest {
             BaseOrder baseOrder = orderRepository.findById(managedOrder.getId()).get();
             assertEquals(DELIVERY_PENDING, baseOrder.getStatus());
         });
-
 
         BaseOrder baseOrder = orderRepository.findById(managedOrder.getId()).get();
         assertEquals(DELIVERY_PENDING, baseOrder.getStatus());
