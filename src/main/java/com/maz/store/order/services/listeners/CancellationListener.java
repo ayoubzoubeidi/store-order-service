@@ -4,7 +4,6 @@ import com.maz.store.model.cancellation.CancelOrder;
 import com.maz.store.order.sm.StateMachineManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.annotation.JmsListener;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import static com.maz.store.order.config.JmsConfig.CANCEL_QUEUE;

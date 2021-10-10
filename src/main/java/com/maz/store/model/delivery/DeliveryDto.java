@@ -1,7 +1,7 @@
 package com.maz.store.model.delivery;
 
-import com.maz.store.model.order.OrderDto;
 import com.maz.store.model.customer.CustomerDto;
+import com.maz.store.model.order.OrderDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

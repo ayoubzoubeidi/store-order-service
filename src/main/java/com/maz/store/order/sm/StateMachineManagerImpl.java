@@ -7,7 +7,6 @@ import com.maz.store.order.repositories.OrderRepository;
 import com.maz.store.order.sm.interceptors.PreStateChangeInterceptor;
 import com.maz.store.order.web.mappers.OrderMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;

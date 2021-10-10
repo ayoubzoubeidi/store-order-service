@@ -1,8 +1,6 @@
 package com.maz.store.order.sm.actions;
 
-import com.maz.store.model.order.OrderDto;
 import com.maz.store.model.product.ValidationRequest;
-import com.maz.store.model.product.ValidationResponse;
 import com.maz.store.order.config.JmsConfig;
 import com.maz.store.order.domain.OrderStatus;
 import com.maz.store.order.repositories.OrderRepository;

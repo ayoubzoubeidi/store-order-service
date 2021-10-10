@@ -1,7 +1,10 @@
 package com.maz.store.model.inventory;
 
 import com.maz.store.model.order.OrderDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 

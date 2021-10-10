@@ -1,7 +1,6 @@
 package com.maz.store.order.repositories;
 
 import com.maz.store.order.domain.BaseOrder;
-import com.maz.store.order.domain.OrderLine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
