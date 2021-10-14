@@ -20,6 +20,4 @@ public class OrderDto implements Serializable {
     private UUID customerId;
     private List<OrderLineDto> orderLines = new ArrayList<>();
     private String status;
-
-
 }

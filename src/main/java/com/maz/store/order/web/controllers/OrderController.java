@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
@@ -34,5 +34,9 @@ public class OrderController {
         return new ResponseEntity(order, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/{orderId}/cancel")
+    public ResponseEntity cancelOrder(@PathVariable("orderId") UUID orderId) {
+        return new ResponseEntity(orderService.cancelOrder(orderId), HttpStatus.OK);
+    }
 
 }

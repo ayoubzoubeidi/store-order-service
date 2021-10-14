@@ -10,4 +10,5 @@ public interface OrderService {
 
     OrderDto checkOrderStatus(UUID orderId);
 
+    OrderDto cancelOrder(UUID orderId);
 }

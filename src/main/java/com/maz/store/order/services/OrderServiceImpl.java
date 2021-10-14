@@ -4,6 +4,7 @@ import com.maz.store.model.order.OrderDto;
 import com.maz.store.order.domain.BaseOrder;
 import com.maz.store.order.repositories.OrderRepository;
 import com.maz.store.order.sm.StateMachineManager;
+import com.maz.store.order.web.exceptions.OrderNotFoundException;
 import com.maz.store.order.web.mappers.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,14 +34,20 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto checkOrderStatus(UUID orderId) {
 
-        Optional<BaseOrder> orderOptional = orderRepository.findById(orderId);
+        BaseOrder order = orderRepository.findById(orderId).orElseThrow(
+                () -> new OrderNotFoundException("Order Not Found id = " + orderId)
+        );
 
-        if (orderOptional.isEmpty())
-            throw new RuntimeException("Order Not Found");
-        else {
+        return orderMapper.orderToOrderDto(order);
+    }
 
-            return orderMapper.orderToOrderDto(orderOptional.get());
-        }
 
+    @Override
+    public OrderDto cancelOrder(UUID orderId) {
+        stateMachineManager.cancelOrder(orderId);
+        BaseOrder order = orderRepository.findById(orderId).orElseThrow(
+                () -> new OrderNotFoundException("Order Not Found id = " + orderId)
+        );
+        return orderMapper.orderToOrderDto(order);
     }
 }
