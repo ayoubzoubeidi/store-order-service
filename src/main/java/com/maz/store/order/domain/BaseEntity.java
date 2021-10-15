@@ -29,17 +29,17 @@ public class BaseEntity {
     )
     @Type(type="org.hibernate.type.UUIDCharType")
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
-    private UUID id;
+    protected UUID id;
 
     @Version
-    private Long version;
+    protected Long version;
 
     @CreationTimestamp
     @Column(updatable = false)
-    private Timestamp createdDate;
+    protected Timestamp createdDate;
 
     @UpdateTimestamp
-    private Timestamp lastModifiedDate;
+    protected Timestamp lastModifiedDate;
 
     public boolean isNew() {
         return this.id == null;

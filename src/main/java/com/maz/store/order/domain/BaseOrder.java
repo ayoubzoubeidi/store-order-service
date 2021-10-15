@@ -13,11 +13,14 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
 public class BaseOrder extends BaseEntity {
+
+    public BaseOrder() {
+        super();
+    }
 
     @OneToMany(mappedBy = "baseOrder", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
